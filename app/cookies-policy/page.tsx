@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Политика использования файлов cookie",
@@ -24,9 +25,13 @@ export default function CookiesPolicyPage() {
         <p>
           Вы можете отказаться от необязательных cookie в настройках браузера или через специальный баннер.
         </p>
-        <p className="mt-4">
-          <Link href="/" className="text-blue-600 hover:underline">← Вернуться на главную</Link>
-        </p>
+      </div>
+
+      {/* Кнопка возврата в кабинет */}
+      <div className="mt-8">
+        <Link href="/dashboard">
+          <Button variant="outline">← Вернуться в личный кабинет</Button>
+        </Link>
       </div>
     </div>
   )

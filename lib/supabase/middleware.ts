@@ -28,25 +28,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Защита маршрутов
   const path = request.nextUrl.pathname
 
-  // Публичные маршруты (доступны без входа)
-  // ✅ Добавили /privacy-policy и /cookies-policy
-  const publicRoutes = ["/auth/login", "/auth/register", "/auth/error", "/privacy-policy", "/cookies-policy"]
+  // 1. Маршруты, доступные без входа (логин, регистрация)
+  const publicRoutes = ["/auth/login", "/auth/register", "/auth/error"]
   const isPublicRoute = publicRoutes.some((route) => path.startsWith(route))
 
-  if (!user && !isPublicRoute && path !== "/") {
+  // 2. Страницы политик — доступны всем (и без входа, и с входом)
+  const policyRoutes = ["/privacy-policy", "/cookies-policy"]
+  const isPolicyRoute = policyRoutes.some((route) => path.startsWith(route))
+
+  // Если пользователь НЕ авторизован, и путь — НЕ публичный, и НЕ политика (и не корень) -> на вход
+  if (!user && !isPublicRoute && !isPolicyRoute && path !== "/") {
     const url = request.nextUrl.clone()
     url.pathname = "/auth/login"
     return NextResponse.redirect(url)
   }
 
+  // Если пользователь авторизован и пытается зайти на логин/регистрацию -> на дашборд
   if (user && isPublicRoute) {
     const url = request.nextUrl.clone()
     url.pathname = "/dashboard"
     return NextResponse.redirect(url)
   }
 
+  // ✅ Авторизованные пользователи могут спокойно заходить на страницы политик (ничего не делаем)
   return supabaseResponse
 }

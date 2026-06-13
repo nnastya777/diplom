@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Политика обработки персональных данных",
@@ -42,10 +43,13 @@ export default function PrivacyPolicyPage() {
           Данные хранятся в течение всего периода трудовых отношений + 5 лет после увольнения. Вы вправе отозвать согласие, направив заявление на почту school@vologda.ru. 
           Отзыв может повлечь невозможность использования системы.
         </p>
+      </div>
 
-        <p className="mt-4">
-          <Link href="/" className="text-blue-600 hover:underline">← Вернуться на главную</Link>
-        </p>
+      {/* Кнопка возврата в кабинет */}
+      <div className="mt-8">
+        <Link href="/dashboard">
+          <Button variant="outline">← Вернуться в личный кабинет</Button>
+        </Link>
       </div>
     </div>
   )
