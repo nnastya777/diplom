@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { Footer } from '@/components/footer' // ✅ импорт футера
+import { CookieBanner } from '@/components/cookie-banner' // ✅ импорт cookie-баннера
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin"] });
+const geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Система учета рабочего времени',
+  description: 'Учет рабочего времени сотрудников школы г. Вологды',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,9 +37,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
+    <html lang="ru">
+      <body className={`${geist.className} font-sans antialiased min-h-screen flex flex-col`}>
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer /> {/* ✅ футер внизу страницы */}
+        <CookieBanner /> {/* ✅ баннер появляется при необходимости */}
         <Analytics />
       </body>
     </html>

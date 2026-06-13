@@ -31,8 +31,9 @@ export async function updateSession(request: NextRequest) {
   // Защита маршрутов
   const path = request.nextUrl.pathname
 
-  // Публичные маршруты
-  const publicRoutes = ["/auth/login", "/auth/register", "/auth/error"]
+  // Публичные маршруты (доступны без входа)
+  // ✅ Добавили /privacy-policy и /cookies-policy
+  const publicRoutes = ["/auth/login", "/auth/register", "/auth/error", "/privacy-policy", "/cookies-policy"]
   const isPublicRoute = publicRoutes.some((route) => path.startsWith(route))
 
   if (!user && !isPublicRoute && path !== "/") {
